@@ -1,0 +1,2 @@
+Paquetes usados en desarrollo
+ipython==8.32.0
