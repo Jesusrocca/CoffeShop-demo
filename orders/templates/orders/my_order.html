@@ -1,0 +1,36 @@
+{% extends "header.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow-lg p-5 border-0 rounded-5" style="background: linear-gradient(135deg, #f0f2f5, #d6e0f0);">
+        <h2 class="text-center mb-4 text-primary fw-bold" style="font-family: 'Roboto', sans-serif;">Órdenes de Cliente</h2>
+        <div class="border p-4 rounded bg-white shadow-lg" style="box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);">
+            <h5 class="text-dark" style="font-family: 'Poppins', sans-serif; font-weight: 500;">
+                <strong>Cliente:</strong> {{ order.user.username }}
+            </h5>
+            <h6 class="text-muted mb-2" style="font-family: 'Poppins', sans-serif;">
+                <strong>ID de Orden:</strong> {{ order.OrderID }}
+            </h6>
+            <h6 class="text-muted" style="font-family: 'Poppins', sans-serif;">
+                <strong>Fecha:</strong> {{ order.order_date|date }}
+            </h6>
+        </div>
+        
+        <div class="mt-5">
+            <h4 class="text-primary" style="font-family: 'Poppins', sans-serif; font-weight: 600;">Productos en la Orden</h4>
+            {% if order.orderproduct_set.all %}
+                <ul class="list-group mt-4">
+                    {% for product_order in order.orderproduct_set.all %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center border-0 shadow-sm rounded-4 mb-3" style="background: #ffffff; transition: all 0.3s ease;">
+                            <span class="fw-bold text-dark" style="font-family: 'Poppins', sans-serif;">{{ product_order.product.name }}</span>
+                            <span class="badge bg-success p-3 rounded-pill fs-5">${{ product_order.product.price }}</span>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="text-muted text-center mt-3" style="font-family: 'Poppins', sans-serif;">No hay ítems en tu orden</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock content %}

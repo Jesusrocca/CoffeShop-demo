@@ -6,38 +6,72 @@
     <title>Coffee Shop</title>
     <link rel="stylesheet" href="styles.css"> <!-- Enlace a un archivo CSS externo -->
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <link rel="icon" href="./logos/taza-de-cafe.png" type="image/png">
+
 </head>
 <body>
+    <!-- Encabezado -->
     <header class="border-b border-gray-300 bg-white shadow-md p-4 flex justify-between items-center">
         <div class="text-lg font-semibold text-gray-800">
             <a href="/" class="hover:text-blue-600 transition-colors">Mi Sitio Web</a>
         </div>
-        
-        <div>
+
+        <div class="flex items-center space-x-6 bg-white p-4 rounded-lg shadow-md">
             {% if user.is_authenticated %}
             <div class="flex items-center space-x-4">
-                <p class="text-gray-700">Hola, <span class="font-medium">{{ user.username }}</span></p>
-                
+                <p class="text-gray-700 text-lg font-semibold">
+                    👋 Hola, <span class="text-blue-600">{{ user.username }}</span>
+                </p>
+                <form action="{% url 'add_products' %}" method="post" class="inline">
+                    {% csrf_token %}
+                    <button type="submit" class="px-4 py-2 text-sm font-medium text-white bg-red-500 hover:bg-red-600 rounded-lg shadow-md transition-all flex items-center">
+                        Agregar producto  
+                    </button>
+                </form>
                 <form action="{% url 'logout' %}" method="post" class="inline">
                     {% csrf_token %}
-                    <button type="submit" class="px-4 py-2 text-sm font-medium text-white bg-red-500 hover:bg-red-600 rounded-lg shadow-md transition-all">
-                        Cerrar sesión
+                    <button type="submit" class="px-4 py-2 text-sm font-medium text-white bg-red-500 hover:bg-red-600 rounded-lg shadow-md transition-all flex items-center">
+                        🚪 Cerrar sesión
                     </button>
                 </form>
             </div>
             {% else %}
-            <a href="{% url 'login' %}" class="px-4 py-2 text-sm font-medium text-blue-500 border border-blue-500 hover:bg-blue-500 hover:text-white rounded-lg shadow-md transition-all">
-                Iniciar sesión
+            <a href="{% url 'login' %}" class="px-4 py-2 text-sm font-medium text-blue-500 border border-blue-500 hover:bg-blue-500 hover:text-white rounded-lg shadow-md transition-all flex items-center">
+                🔑 Iniciar sesión
             </a>
             {% endif %}
+            
+            <a href="{% url 'my_order' %}" class="px-4 py-2 text-sm font-medium text-green-500 border border-green-500 hover:bg-green-500 hover:text-white rounded-lg shadow-md transition-all flex items-center">
+                📦 Mi pedido
+            </a>
         </div>
     </header>
     
-    {% block content %}
+    <!-- Sección Hero -->
+    <section class="relative bg-[url(https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?q=80&w=2078&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)] bg-cover bg-center bg-no-repeat">
+        <div class="absolute inset-0 bg-gray-900/75 sm:bg-transparent sm:from-gray-900/95 sm:to-gray-900/25 ltr:sm:bg-gradient-to-r rtl:sm:bg-gradient-to-l"></div>
+        <div class="relative mx-auto max-w-screen-xl px-4 py-32 sm:px-6 lg:flex lg:h-screen lg:items-center lg:px-8">
+            <div class="max-w-xl text-center ltr:sm:text-left rtl:sm:text-right">
+                <h1 class="text-3xl font-extrabold text-white sm:text-5xl">
+                    COFFE SHOP
+                    <strong class="block font-extrabold text-rose-500"> DEMO </strong>
+                </h1>
+                <p class="mt-4 max-w-lg text-white sm:text-xl/relaxed">
+                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nesciunt illo tenetur fuga ducimus numquam ea!
+                </p>
+            </div>
+        </div>
+    </section>
     
-    {% endblock content %}
-    <footer>
-        <p>&copy; 2025 Mi Página Web</p>
+    <!-- Contenido principal -->
+    <main>
+        {% block content %}
+        {% endblock content %}
+    </main>
+    
+    <!-- Pie de página -->
+    <footer class="bg-gray-800 text-white text-center py-4 mt-10">
+        <p>&copy;2025-jesusedward</p>
     </footer>
 </body>
 </html>

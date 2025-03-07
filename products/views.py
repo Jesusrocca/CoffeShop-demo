@@ -1,6 +1,9 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from .serializers import ProductSerializer
 from .forms import ProductForm
 from .forms import Product
 # Create your views here.
@@ -17,4 +20,17 @@ class ProducFormView(generic.FormView):
 class ProductListView(generic.ListView):
     model = Product
     template_name = 'products/list_products.html'
+    context_object_name = 'products'
+
+class ProductListAPI(APIView):
+    authentication_classes=[]
+    permission_classes=[]
+    def get(self, request):
+        products = Product. objects.all()
+        serializer = ProductSerializer(products, many=True)
+        return Response(serializer.data)
+    
+class AdminProducts(generic.ListView):
+    model = Product
+    template_name = 'products/admin_products.html'
     context_object_name = 'products'
